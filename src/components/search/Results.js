@@ -1,0 +1,13 @@
+import React, { Component } from 'react'
+
+export default class Results extends Component {
+    render() {
+        return (
+            <div>
+                <li>
+                    {this.props.item.name}
+                </li>
+            </div>
+        )
+    }
+}
