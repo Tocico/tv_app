@@ -1,7 +1,19 @@
-.container-image{
-    width: 100%;
-    height: 100%;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: left;
+.main {
+  text-align: center;
+  display: flex;
+  width: 100%;
+  .img {
+      width: 50%;
+    .main-img {
+      width: 40vw;
+    }
+  }
+  .text {
+      width: 50%;
+      align-self: center;
+    .mainName {
+      color: white;
+      font-size: 10em;
+    }
+  }
 }

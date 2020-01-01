@@ -1,8 +1,9 @@
 import axios from 'axios'
 
 export async function load(){
-    const allVideo = await getData();
-    return allVideo;
+    const tvShow = await getOneImage();
+    const tvShowList = await getTvShow();
+    return { tvShow , tvShowList };
 }
 
 export async function getVideo(name){
@@ -23,23 +24,47 @@ export async function getVideo(name){
 
 }
 
-async function getData(){
+async function getTvShow(){
+    async function fetchTvShow(){
+        const response = await axios(`http://api.tvmaze.com/shows`);
+        if(response.status === 200){
+            const result = response.data;
+            return result;
+        }
+    }
+
+    const tvShowList = await fetchTvShow();
+    if(!tvShowList) return Error;
+    
+    let randoms = [];
+    let showList = [];
+    while(showList.length < 50){
+        let id =  Math.floor(Math.random() * 240);
+        if(!randoms.includes(id)){
+            randoms.push(id);
+            showList.push(tvShowList[id]);
+        }
+    }
+    return { showList }
+}
+
+async function getOneImage(){
 
     async function fetchImage(){
         let num = 1 + Math.floor(Math.random() * 1000);
         const response = await axios (`http://api.tvmaze.com/shows/${num}`);
          if(response.status === 200){
-             let image = response.data.image.original;
-             return image;
+             return response.data;
             }
     }
 
- 
+    const  oneTvShow= await fetchImage();
+    if(!oneTvShow) return Error;
+    const tvName = oneTvShow.name;
+    const oneImage = oneTvShow.image.original;
+    const summary = oneTvShow.summary;
 
-    const image = await fetchImage();
-    if(!image) return Error;
-
-    return {image};
+    return { tvName, oneImage, summary };
 
 }
 

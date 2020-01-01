@@ -1,0 +1,16 @@
+.showList{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    img{
+        margin: 3% 0;
+        cursor: pointer;
+    }
+}
+
+.dialogue{
+
+    &.hidden{
+        visibility: hidden;
+    }
+}

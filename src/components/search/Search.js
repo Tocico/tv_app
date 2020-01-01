@@ -102,13 +102,8 @@ export default class Search extends Component {
 
   render() {
     return (
-      <React.Fragment>
-        <Container className="container">
-          <Row className="row">
-            <Col className="col">
-              <Image image={this.state.image} />
-            </Col>
-            <Col className="col">
+      <>
+       
               <div className="search-input">
                 <FormControl
                   ref={node => (this.node = node)}
@@ -146,9 +141,6 @@ export default class Search extends Component {
                     </div>
                 </div>
               )}
-            </Col>
-          </Row>
-        </Container>
         {/* {this.state.list.map((item, index)=>
               <Results 
                   key={index}
@@ -157,7 +149,7 @@ export default class Search extends Component {
               />
               )
               } */}
-      </React.Fragment>
+      </>
     );
   }
 }
