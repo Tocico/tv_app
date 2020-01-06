@@ -3,7 +3,7 @@ import Loading from "./components/loading/Loading";
 import { load } from "./data/index";
 import TvShowList from "./components/list/TvShowList"
 import VideoList from "./components/list/VideoList";
-import Search from "./components/search/Search";
+import Navbar from "./components/header/Navbar"
 
 
 class App extends Component {
@@ -18,7 +18,8 @@ class App extends Component {
         image: '',
         summary: ''
       },
-      tvShowList: ''
+      tvShowList: '',
+      isMainShown: false,
     };
   }
 
@@ -34,11 +35,10 @@ class App extends Component {
         image: tvShow.oneImage,
         summary: tvShow.summary
       },
-      tvShowList: tvShowList
+      tvShowList: tvShowList,
+      isMainShown: true,
     });
   }
-
-
 
   render() {
     return (
@@ -47,19 +47,22 @@ class App extends Component {
           <Loading />
         ) : (
             <>
-              {/* <Search image={this.state.image}/> */}
-              <div className="main">
-                <div className="img">
-                  <img className='main-img' src={this.state.mainTvShow.image}></img>
-                </div>
-                <div className="text">
-                  <h1 className="mainName">{this.state.mainTvShow.name}</h1>
-                  <div dangerouslySetInnerHTML={{ __html: this.state.mainTvShow.summary }}></div>
-                </div>
-              </div>
-              <div className="showList">
-              <TvShowList showList={this.state.tvShowList}></TvShowList>
-              </div>
+              <Navbar isMainShown={() => { this.setState({isMainShown: !this.state.isMainShown})}}/>
+              {this.state.isMainShown ?
+                <>
+                  <div className="main">
+                    <div className="img">
+                      <img className='main-img' src={this.state.mainTvShow.image}></img>
+                    </div>
+                    <div className="text">
+                      <h1 className="mainName">{this.state.mainTvShow.name}</h1>
+                      <div dangerouslySetInnerHTML={{ __html: this.state.mainTvShow.summary }}></div>
+                    </div>
+                  </div>
+                  <div>
+                    <TvShowList showList={this.state.tvShowList}></TvShowList>
+                  </div></> : ''
+              }
             </>
           )}
       </>

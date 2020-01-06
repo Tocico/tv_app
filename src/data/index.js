@@ -18,9 +18,23 @@ export async function getVideo(name){
     }
 
     const tvShowItem = await fetchData();
+    return { tvShowItem };
 
-    console.log(tvShowItem)
-    return tvShowItem;
+}
+
+export async function searchTvShow(name){
+    async function fetchData(){
+        const response = await axios(`https://api.tvmaze.com//search/shows?q=${name}`)
+        .catch(error => {return error})
+        if(response.status === 200){
+            const searchTvShow = response.data;
+            return searchTvShow;
+        }
+        
+    }
+
+    const searchTvShow = await fetchData();
+    return { searchTvShow };
 
 }
 
@@ -38,7 +52,7 @@ async function getTvShow(){
     
     let randoms = [];
     let showList = [];
-    while(showList.length < 50){
+    while(showList.length < 60){
         let id =  Math.floor(Math.random() * 240);
         if(!randoms.includes(id)){
             randoms.push(id);

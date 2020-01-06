@@ -1,33 +1,36 @@
-import React, { useState, useEffect } from 'react'
-import Dialogue from './Dialogue'
+import React, { useState } from 'react'
+import Dialogue from '../list/Dialogue'
 import { getVideo } from '../../data/index';
 
 
-function TvShowList({ showList }) {
-    // const [dialogueIsShown, setDialogueIsShown] = useState(false);
+function Results({ result }) {
     const [recentData, setRecentData] = useState('');
 
-    async function onClick(item) {
-        // setDialogueIsShown(true);
-        const { tvShowItem } = await getVideo(item);
-        setRecentData(tvShowItem);
-        console.log(tvShowItem)
+    function forLoop(image) {
+        for (const i in image) {
+            return image['medium']
+        }
     }
 
-  
+    async function onClick(item) {
+        const { tvShowItem } = await getVideo(item);
+        setRecentData(tvShowItem);
+    }
 
 
     return (
         <>
         <div className="showList">
-            {showList.showList.map((item, key) => {
-                return (
-                    <>
-                        <label key={key} htmlFor="trigger" className="open_button" ><img key={key} onClick={() => { onClick(item.name) }} src={item.image.medium}></img></label>
-                    </>
-                )
-            })}
-            </div>
+            {Object.keys(result).map((e, key) => (
+                <>
+                    <label key={key} htmlFor="trigger" className="open_button" >
+                        {result[e].show.image ?
+                            <img onClick={() => { onClick(result[e].show.name) }} src={forLoop(result[e].show.image)}></img> :
+                            <div onClick={() => { onClick(result[e].show.name) }} className="empty"><h3>{result[e].show.name}</h3></div>
+                        }
+                    </label></>
+            ))}
+        </div>
             <div className="modal_wrap">
                 <input id="trigger" type="checkbox" />
                 <div className="modal_overlay">
@@ -42,5 +45,4 @@ function TvShowList({ showList }) {
     )
 }
 
-
-export default TvShowList;
+export default Results
