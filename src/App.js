@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import Loading from "./components/loading/Loading";
-import { load } from "./data/index";
-import TvShowList from "./components/list/TvShowList"
-import VideoList from "./components/list/VideoList";
-import Navbar from "./components/header/Navbar"
+import { load } from "./server/index";
+import TvShowList from "./components/list/TvShowList";
+import Navbar from "./components/header/Navbar";
 
 
 class App extends Component {
@@ -16,7 +15,8 @@ class App extends Component {
       mainTvShow: {
         name: '',
         image: '',
-        summary: ''
+        summary: '',
+        id: ''
       },
       tvShowList: '',
       isMainShown: false,
@@ -33,7 +33,8 @@ class App extends Component {
       mainTvShow: {
         name: tvShow.tvName,
         image: tvShow.oneImage,
-        summary: tvShow.summary
+        summary: tvShow.summary,
+        id: tvShow.tvShowId
       },
       tvShowList: tvShowList,
       isMainShown: true,
@@ -52,7 +53,7 @@ class App extends Component {
                 <>
                   <div className="main">
                     <div className="img">
-                      <img className='main-img' src={this.state.mainTvShow.image}></img>
+                      <img className='main-img' src={this.state.mainTvShow.image} alt='main pic'></img>
                     </div>
                     <div className="text">
                       <h1 className="mainName">{this.state.mainTvShow.name}</h1>

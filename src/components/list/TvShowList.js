@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react'
-import Dialogue from './Dialogue'
-import { getVideo } from '../../data/index';
+import React, { useState } from 'react'
+import Dialogue from '../dialogue/Dialogue'
+import { getVideo } from '../../server/index';
 
 
 function TvShowList({ showList }) {
     // const [dialogueIsShown, setDialogueIsShown] = useState(false);
     const [recentData, setRecentData] = useState('');
 
-    async function onClick(item) {
+    async function onClick(query) {
         // setDialogueIsShown(true);
-        const { tvShowItem } = await getVideo(item);
+        const { tvShowItem } = await getVideo(query);
         setRecentData(tvShowItem);
         console.log(tvShowItem)
     }
@@ -23,21 +23,12 @@ function TvShowList({ showList }) {
             {showList.showList.map((item, key) => {
                 return (
                     <>
-                        <label key={key} htmlFor="trigger" className="open_button" ><img key={key} onClick={() => { onClick(item.name) }} src={item.image.medium}></img></label>
+                        <label key={key} htmlFor="trigger" className="open_button" ><img key={key} onClick={() => { onClick(item.id) }} src={item.image.medium} alt={item.name}></img></label>
                     </>
                 )
             })}
             </div>
-            <div className="modal_wrap">
-                <input id="trigger" type="checkbox" />
-                <div className="modal_overlay">
-                    <label htmlFor="trigger" className="modal_trigger"></label>
-                    <div className="modal_content">
-                        <label htmlFor="trigger" className="close_button">✖️</label>
                         <Dialogue dialogueInfo={recentData} />
-                    </div>
-                </div>
-            </div>
         </>
     )
 }

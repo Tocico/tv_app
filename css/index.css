@@ -57,6 +57,7 @@
 
 .main .img .main-img {
   width: 30vw;
+  cursor: pointer;
 }
 
 .main .text {
@@ -163,6 +164,13 @@
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
+}
+
+.errorMsg {
+  font-size: 1.6em;
+  display: block;
+  margin: 4%;
+  text-align: center;
 }
 
 .loading-box {
@@ -453,12 +461,14 @@
 }
 
 .dialogue .summary .summary_text {
-  width: 95%;
+  width: 80%;
+  margin: 0 auto;
 }
 
 .dialogue .pStyle {
   font-size: 15px;
   width: 60%;
+  margin: 0 auto;
 }
 
 .dialogue .lightBlack {
@@ -480,7 +490,7 @@
           flex-direction: row;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  margin-top: 3%;
+  margin: 3% 7%;
 }
 
 .dialogue .container .container_image {
@@ -535,5 +545,9 @@ body {
 
 h4 {
   font-size: 1.2em;
+}
+
+p {
+  text-align: left;
 }
 /*# sourceMappingURL=index.css.map */

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
-import Search from './Search';
+import Search from '../search/Search';
 
 const propTypes = {
     isMainShown: PropTypes.func,
@@ -24,7 +24,7 @@ class Navbar extends Component {
             <div className="header">
             <header>
                 <div className="wrapper">
-                    <h1>TV SHOW</h1>
+                    <a href='./'><h1>TV SHOW</h1></a>
                     <div className="menuTrigger" onClick={() => this.setState({ showMenu: !this.state.showMenu })}>
                         <i className="fa fa-search " onClick={() => this.onFocus()} />
                     </div>

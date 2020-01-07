@@ -6,9 +6,10 @@ export async function load(){
     return { tvShow , tvShowList };
 }
 
-export async function getVideo(name){
+
+export async function getVideo(query){
     async function fetchData(){
-        const response = await axios(`https://api.tvmaze.com/singlesearch/shows?q=${name}&embed=episodes`)
+        const response = await axios(`http://api.tvmaze.com/shows/${query}?embed=episodes`)
         .catch(error => {return error})
         if(response.status === 200){
             const tvShowItem = response.data;
@@ -28,7 +29,12 @@ export async function searchTvShow(name){
         .catch(error => {return error})
         if(response.status === 200){
             const searchTvShow = response.data;
+            const errorMsg = 'no show'
+            if(searchTvShow.length === 0){
+                return errorMsg;
+            }
             return searchTvShow;
+            
         }
         
     }
@@ -77,8 +83,9 @@ async function getOneImage(){
     const tvName = oneTvShow.name;
     const oneImage = oneTvShow.image.original;
     const summary = oneTvShow.summary;
+    const tvShowId = oneTvShow.id;
 
-    return { tvName, oneImage, summary };
+    return { tvName, oneImage, summary, tvShowId };
 
 }
 

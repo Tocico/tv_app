@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { FormControl } from "react-bootstrap";
-import { searchTvShow } from "../../data/index";
+import { searchTvShow } from "../../server/index";
 import Results from './Results'
 
 
@@ -24,21 +24,15 @@ export default class Search extends Component {
     if (searchWord.length > 0 && searchWord !== "" && searchWord !== " ") {
       searchTvShow(searchWord)
         .then(response => {
+          console.log(response.searchTvShow === 'no show')
           this.setState({
             focus: true,
-            error: "",
-            result: response.searchTvShow
+            error: response.searchTvShow === 'no show' ? `We can not find ${this.state.searchWord}` : '',
+            result: response.searchTvShow === 'no show' ? [] : response.searchTvShow
           });
-          console.log(!response.searchTvShow)
         })
-        .catch(error => {
-          console.log(!error)
-          this.setState({
-            error: `We can not find ${this.state.searchWord}`
-          })
-        });
-     } 
-     else {
+    }
+    else {
       this.setState({
         result: []
       });
@@ -63,7 +57,7 @@ export default class Search extends Component {
   };
 
   render() {
-    console.log(this.state.error)
+    console.log(this.state.result)
     return (
       <>
 
@@ -83,7 +77,9 @@ export default class Search extends Component {
             />
           ) : ''}
         </div>
-            <Results result={this.state.result} /> 
+        {this.state.error ? <div className="errorMsg"><div>{this.state.error}</div><div>Please make sure what you're looking for is a tv show</div></div> :
+          <Results result={this.state.result} />
+        }
       </>
     );
   }
