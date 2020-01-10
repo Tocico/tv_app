@@ -9,7 +9,7 @@ export async function load(){
 
 export async function getVideo(query){
     async function fetchData(){
-        const response = await axios(`http://api.tvmaze.com/shows/${query}?embed=episodes`)
+        const response = await axios(`https://api.tvmaze.com/shows/${query}?embed=episodes`)
         return response.data;
     }
 
@@ -36,7 +36,7 @@ export async function searchTvShow(name){
 
 async function getTvShow(){
     async function fetchTvShow(){
-        const response = await axios(`http://api.tvmaze.com/shows`);
+        const response = await axios(`https://api.tvmaze.com/shows`);
             return response.data;
     }
 
@@ -58,7 +58,7 @@ async function getOneImage(){
 
     async function fetchImage(){
         let num = 1 + Math.floor(Math.random() * 1000);
-        const response = await axios (`http://api.tvmaze.com/shows/${num}`);
+        const response = await axios (`https://api.tvmaze.com/shows/${num}`);
              return response.data;
     }
 
