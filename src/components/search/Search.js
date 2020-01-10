@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { FormControl } from "react-bootstrap";
-import { searchTvShow } from "../../server/index";
+import { searchTvShow } from "../../server/api";
 import Results from './Results'
 
 
@@ -57,10 +57,8 @@ export default class Search extends Component {
   };
 
   render() {
-    console.log(this.state.result)
     return (
       <>
-
         <div className="search-input">
           <FormControl
             ref={node => (this.node = node)}

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Loading from "./components/loading/Loading";
-import { load } from "./server/index";
+import { load } from "./server/api";
 import TvShowList from "./components/list/TvShowList";
 import Navbar from "./components/header/Navbar";
 
@@ -11,7 +11,6 @@ class App extends Component {
 
     this.state = {
       isLoading: true,
-      videos: [],
       mainTvShow: {
         name: '',
         image: '',
@@ -25,11 +24,10 @@ class App extends Component {
 
   async componentDidMount() {
     this.setState({ isLoading: true });
-    const { videoList, tvShow, tvShowList } = await load();
-    console.log(tvShow)
+    const {  tvShow, tvShowList } = await load();
+   
     this.setState({
       isLoading: false,
-      videos: videoList,
       mainTvShow: {
         name: tvShow.tvName,
         image: tvShow.oneImage,
@@ -53,7 +51,7 @@ class App extends Component {
                 <>
                   <div className="main">
                     <div className="img">
-                      <img className='main-img' src={this.state.mainTvShow.image} alt='main pic'></img>
+                      <img className='main-img' src={this.state.mainTvShow.image} alt={this.state.mainTvShow.name}></img>
                     </div>
                     <div className="text">
                       <h1 className="mainName">{this.state.mainTvShow.name}</h1>

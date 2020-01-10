@@ -21,16 +21,14 @@ function Dialogue({ dialogueInfo }) {
         episodeCount.push(embedded[i].length);
         episodes.push(embedded[i])
     }
-    //Make a group by season
+    //group by season
     const grouped = {};
-    episodes.map(episode => {
-        // episode.map(season => console.log(season.season))
-        for (let client of episode) {
-            if (!(client.season in grouped)) grouped[client.season] = [client];
-            else grouped[client.season].push(client);
+    episodes.forEach((episode, _) => {
+        for (let tvShow of episode) {
+            if (!(tvShow.season in grouped)) grouped[tvShow.season] = [tvShow];
+            else grouped[tvShow.season].push(tvShow);
         }
     })
-
 
     return (
         <>
@@ -39,16 +37,15 @@ function Dialogue({ dialogueInfo }) {
                 <div className="modal_overlay">
                     <label htmlFor="trigger" className="modal_trigger"></label>
                     <div className="modal_content">
-                        <label htmlFor="trigger" className="close_button">✖️</label>
+                        <label htmlFor="trigger" className="close_button"><span role="img" aria-label="cross">✖️</span></label>
                         {
                             !dialogueInfo ? '' :
                                 <div className="dialogue">
                                     <div className="container">
-                                        <div className="left" className="pStyle">
+                                        <div className="left pStyle">
                                             <h2>{dialogueInfo.name}</h2>
                                             {
-                                                dialogueInfo.language ?
-                                                    <div><span className="lightBlack">Languages: </span>{dialogueInfo.language}</div> : ''
+                                                dialogueInfo.language ? <div><span className="lightBlack">Languages: </span>{dialogueInfo.language}</div> : ''
                                             }
                                             {
                                                 dialogueInfo.genres ? <div><span className="lightBlack">Genres: </span>{genre.map((genre, key) => (<span key={key}>{genre}&nbsp;&nbsp;</span>))}</div> : ''
@@ -59,7 +56,7 @@ function Dialogue({ dialogueInfo }) {
 
                                         </div>
                                         <div className="right">
-                                            <img src={images[0]} />
+                                            <img src={images[0]} alt={dialogueInfo.name}/>
                                         </div>
                                     </div>
                                     <div className="summary">
@@ -67,22 +64,22 @@ function Dialogue({ dialogueInfo }) {
                                     </div>
                                     {
                                         episodes ? <>
-                                            {Object.keys(grouped).map((episode, key) => (<>
-                                                <div className="season" key={key}>Season {episode}</div>
+                                            {Object.keys(grouped).map((episode, key) => (<React.Fragment key={key}>
+                                                <div className="season">Season {episode}</div>
                                                 <div className="container">
-                                                    {grouped[episode].map(e => (
-                                                        <>
+                                                    {grouped[episode].map((e,key) => (
+                                                        <React.Fragment key={key}>
                                                             <div className="container_image">
                                                                 <div className="showTitle">
                                                                     <h4>{e.name}</h4>
-                                                                    <div className="num">Episode {e.number}</div>
+                                                                    <div className="num" key={key}>Episode {e.number}</div>
                                                                 </div>
-                                                                {e.image && e.image['medium'] ? <img src={e.image['medium']} key={key} className="episodeImage"></img> : <div className="noImage"></div>}
+                                                                {e.image && e.image['medium'] ? <img src={e.image['medium']} key={key} className="episodeImage" alt={e.name}></img> : <div className="noImage"></div>}
                                                             </div>
-                                                        </>
+                                                        </React.Fragment>
                                                     ))}
                                                 </div>
-                                            </>))}
+                                            </React.Fragment>))}
                                         </> : ''
                                     }
 
