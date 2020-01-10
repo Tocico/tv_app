@@ -20,7 +20,7 @@ export async function getVideo(query){
 
 export async function searchTvShow(name){
     async function fetchData(){
-        const response = await axios(`https://api.tvmaze.com//search/shows?q=${name}`)
+        const response = await axios(`https://api.tvmaze.com/search/shows?q=${name}`)
             const errorMsg = 'no show'
             const searchTvShow = response.data;
             if(searchTvShow.length === 0){
