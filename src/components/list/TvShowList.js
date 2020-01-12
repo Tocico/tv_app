@@ -3,13 +3,12 @@ import Dialogue from '../dialogue/Dialogue'
 import { getVideo } from '../../server/api';
 
 
-function TvShowList({ showList }) {
+function TvShowList({showList}) {
     const [recentData, setRecentData] = useState('');
 
     async function onClick(query) {
         const { tvShowItem } = await getVideo(query);
         setRecentData(tvShowItem);
-        console.log(tvShowItem)
     }
 
   

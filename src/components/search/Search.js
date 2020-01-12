@@ -24,7 +24,6 @@ export default class Search extends Component {
     if (searchWord.length > 0 && searchWord !== "" && searchWord !== " ") {
       searchTvShow(searchWord)
         .then(response => {
-          console.log(response.searchTvShow === 'no show')
           this.setState({
             focus: true,
             error: response.searchTvShow === 'no show' ? `We can not find ${this.state.searchWord}` : '',
