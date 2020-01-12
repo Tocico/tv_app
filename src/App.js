@@ -3,6 +3,7 @@ import Loading from "./components/loading/Loading";
 import { load } from "./server/api";
 import TvShowList from "./components/list/TvShowList";
 import Navbar from "./components/header/Navbar";
+import Main from "./components/main/Main"
 
 
 class App extends Component {
@@ -15,7 +16,6 @@ class App extends Component {
         name: '',
         image: '',
         summary: '',
-        id: ''
       },
       tvShowList: '',
       isMainShown: false,
@@ -24,15 +24,14 @@ class App extends Component {
 
   async componentDidMount() {
     this.setState({ isLoading: true });
-    const {  tvShow, tvShowList } = await load();
-   
+    const { tvShow, tvShowList } = await load();
+
     this.setState({
       isLoading: false,
       mainTvShow: {
         name: tvShow.tvName,
         image: tvShow.oneImage,
         summary: tvShow.summary,
-        id: tvShow.tvShowId
       },
       tvShowList: tvShowList,
       isMainShown: true,
@@ -46,18 +45,10 @@ class App extends Component {
           <Loading />
         ) : (
             <>
-              <Navbar isMainShown={() => { this.setState({isMainShown: !this.state.isMainShown})}}/>
+              <Navbar isMainShown={() => { this.setState({ isMainShown: !this.state.isMainShown }) }} />
               {this.state.isMainShown ?
                 <>
-                  <div className="main">
-                    <div className="img">
-                      <img className='main-img' src={this.state.mainTvShow.image} alt={this.state.mainTvShow.name}></img>
-                    </div>
-                    <div className="text">
-                      <h1 className="mainName">{this.state.mainTvShow.name}</h1>
-                      <div dangerouslySetInnerHTML={{ __html: this.state.mainTvShow.summary }}></div>
-                    </div>
-                  </div>
+                  {this.state.mainTvShow ? <Main mainTvShow={this.state.mainTvShow} /> : '' }
                   <div>
                     <TvShowList showList={this.state.tvShowList}></TvShowList>
                   </div></> : ''

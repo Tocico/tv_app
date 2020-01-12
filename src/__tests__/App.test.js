@@ -1,75 +1,87 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { mount, shallow, render } from 'enzyme';
 import App from '../App';
-import { load } from '../server/api'
+import { load } from '../server/api';
+import Main from '../components/main/Main';
+import TvShowList from '../components/list/TvShowList';
 
-beforeEach(() => {
-    jest.resetModules();
-})
+
 
 test('should render <App /> without crashing', () => {
     const wrapper = mount(<App />)
     expect(wrapper.exists()).toBeTruthy();
 });
 
-test('render loading animation while loading', () => {
-    const wrapper = mount(<App />)
-    wrapper.setState({
-        isLoading: true
-    })
-    expect(wrapper.find('.loading-box').exists()).toBeTruthy();
+test.only('should not render <Main /> and <TvShowList /> before fetch API', () => {
+    const wrapper = shallow(<App />);
+    const main = wrapper.find(Main);
+    const tvShowList = wrapper.find(TvShowList);
+    expect(main.find('.main').exists()).toBeFalsy();
+    expect(tvShowList.find('.showList').exists()).toBeFalsy();
 })
 
-test('disappear loading animation after loading finish', () => {
+test('should render <Main /> and <TvShowList /> before fetch API', () => {
     const wrapper = mount(<App />);
-    wrapper.setState({
-        isLoading: true
-    })
     return load().then(_ => {
+            wrapper.setState({
+                isMainShow: true
+            })
+        const main = wrapper.find(Main);
+        const tvShowList = wrapper.find(TvShowList);
+        expect(main.find('.main').exists()).toBeTruthy();
+        expect(tvShowList.find('.showList').exists()).toBeTruthy();
+    })
+
+
+})
+
+test('should not have title, image and text exist before fetch API data', () => {
+    const wrapper = shallow(<App />);
+    const mainTvShow = wrapper.state().mainTvShow;
+    expect(mainTvShow.name).toEqual('')
+    expect(mainTvShow.image).toEqual('')
+    expect(mainTvShow.summary).toEqual('')
+})
+
+test('should have title, image and text after fetch API data', () => {
+    const wrapper = mount(<App />);
+    return load().then(res => {
+        const tvShow = res.tvShow;
+
         wrapper.setState({
-            isLoading: false
+            mainTvShow: {
+                name: tvShow.tvName,
+                image: tvShow.oneImage,
+                summary: tvShow.summary,
+
+            }
         })
-        expect(wrapper.find('.loading-box').exists()).toBeFalsy();
+        const mainTvShow = wrapper.state().mainTvShow;
+        expect(mainTvShow.name).toEqual(tvShow.tvName);
+        expect(mainTvShow.image).toEqual(tvShow.oneImage);
+        expect(mainTvShow.summary).toEqual(tvShow.summary);
     })
 })
 
-// test('render random one big image, title and text in the first page', () => {
-//     const wrapper = mount(<App />);
-//     return load().then(res => {
-//         const tvShow = res.tvShow;
-        
-//         wrapper.setState({
-//             mainTvShow: {
-//                 name: tvShow.tvName,
-//                 image: tvShow.oneImage,
-//                 summary: tvShow.summary,
-//                 id: tvShow.tvShowId,
-//             }
-//         })
-//         const name = wrapper.state().mainTvShow.name;
-//         expect(wrapper.find('.mainName')).toHaveLength(1);
+test('should not have tv show list', () => {
+    const wrapper = shallow(<App />);
+    expect(wrapper.state().tvShowList).toEqual('')
+})
 
-// })
+test('should have 60 tv show list after fetch API', () => {
+    const wrapper = mount(<App />);
+    return load().then(res => {
+        const data = res.tvShowList;
+        Object.keys(data).map((e) => {
+            wrapper.setState({
+                tvShowList: data[e]
+            })
+            expect(wrapper.state().tvShowList).toHaveLength(60)
+        })
+    })
+})
 
-// test('list with rates', () => {
-//     return loadRates().then(data => {
-//         const wrapper = shallow(<App />);
-//         const rates = mapObjectToArray(data.rates);
-//         wrapper.setState({ rates });
-//         const list = wrapper.find('.list-reset');
-//         expect(list.children()).toHaveLength(31);
-//     });
-// });
 
-// test('should list items when rates are filled', async () => {
-//     const { rates } = await loadRates();
-//     const wrapper = shallow(<App />);
-//     wrapper.setState({ rates: mapObjectToArray(rates) });
-//     expect(wrapper.find('li')).toHaveLength(31);
-//     wrapper.find('input').simulate('change', {
-//       target: { name: 'search', value: 'aud' }
-//     });
-//     expect(wrapper.find('li')).toHaveLength(1);
-//    });
+
 
 
