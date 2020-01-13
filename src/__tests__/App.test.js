@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount, shallow, render } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import App from '../App';
 import { load } from '../server/api';
 import Main from '../components/main/Main';
@@ -21,6 +21,7 @@ test('should render <App /> without crashing', () => {
 });
 
 test('should render <Navbar /> without crashing', () => {
+    expect.assertions(2);
     const wrapper = shallow(<App />)
     const navbar = wrapper.find(Navbar);
     expect(navbar.exists()).toBeFalsy();
@@ -38,6 +39,7 @@ test('should not render <Main /> before fetch API data', () => {
 })
 
 test('should change state mainTvShow after fetch API', () => {
+    expect.assertions(6);
     return load().then(res => {
         const wrapper = mount(<App />);
         expect(wrapper.state().mainTvShow.name).toBe('');
@@ -64,6 +66,7 @@ test('should not render <TvShowList /> before fetch API data', () => {
 })
 
 test('should change state tvShowList after fetch API', () => {
+    expect.assertions(2);
     return load().then(res => {
         const wrapper = mount(<App />);
         expect(wrapper.state().tvShowList).toBe('')
@@ -76,12 +79,14 @@ test('should change state tvShowList after fetch API', () => {
     })
 })
 
-test('should throw an error', () => {
-    const wrapper = mount(<App />)
-    return load().then(_ => {
-
-    }).catch(error => {expect(wrapper.find('.error')).toBe(error)})
-});
+// test.only('should throw an error', () => {
+//     const wrapper = mount(<App />)
+//     wrapper.setState({
+//         isLoading: true,
+//         error : 'error'
+//     })
+//         expect(wrapper.find('.error').exists()).toBe(true)
+// });
 
 // test('should not have tv show list', () => {
 //     const wrapper = shallow(<App />);

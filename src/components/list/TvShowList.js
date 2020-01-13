@@ -19,7 +19,7 @@ function TvShowList({showList}) {
         <div className="showList">
             {showList.showList.map((item, key) => {
                 return (
-                        <label key={key} htmlFor="trigger" className="open_button" ><img onClick={() => { onClick(item.id) }} src={item.image.medium} alt={item.name}></img></label>
+                        <label key={key} htmlFor="trigger" className="open_button" ><img onClick={() => { onClick(item.id) }} src={item.image.medium} alt={item.name} data-id={item.id} className="showImg"></img></label>
                 )
             })}
             </div>

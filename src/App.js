@@ -47,22 +47,18 @@ class App extends Component {
       <>
         {this.state.isLoading ? (
           <Loading />
-        ) : (
-            <>
-              {this.state.error ? <p className="error">{this.state.error}</p> :
-                <>
-                  <Navbar isMainShown={() => { this.setState({ isMainShown: !this.state.isMainShown }) }} />
-                  {this.state.isMainShown ?
-                    <>
-                      {this.state.mainTvShow ? <Main mainTvShow={this.state.mainTvShow} /> : ''}
-                      <div>
-                        <TvShowList showList={this.state.tvShowList}></TvShowList>
-                      </div></> : ''
-                  }
-                </>
-              }
-            </>
-          )}
+        ) : this.state.error ? <p className="error">{this.state.error}</p> : (
+          <>
+            <Navbar isMainShown={() => { this.setState({ isMainShown: !this.state.isMainShown }) }} />
+            {this.state.isMainShown ?
+              <>
+                {this.state.mainTvShow ? <Main mainTvShow={this.state.mainTvShow} /> : ''}
+                <div>
+                  <TvShowList showList={this.state.tvShowList}></TvShowList>
+                </div></> : ''
+            }
+          </>
+        )}
       </>
     );
   }
