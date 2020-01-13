@@ -38,13 +38,18 @@ test('should not render <Main /> before fetch API data', () => {
 
 test('should render <Main /> after fetch API', () => {
     const wrapper = mount(<App />);
-    return load().then(_ => {
+    const main = wrapper.find(Main);
+    return load().then(res => {
         wrapper.setState({
             isLoading: false,
-            isMainShow: true
+            isMainShow: true,
+            mainTvShow: {
+                name: res.tvShow.tvName,
+                image: res.tvShow.oneImage,
+                summary: res.tvShow.summary,
+              }
         })
-        const main = wrapper.find(Main);
-        expect(main.find('.main')).toHaveLength(1);
+        expect(wrapper.find('.main').exists()).toBeTruthy();
     })
 })
 
@@ -55,13 +60,18 @@ test('should not render <TvShowList /> before fetch API data', () => {
 
 test('should render <TvShowList /> after fetch API', () => {
     const wrapper = mount(<App />);
-    return load().then(_ => {
+    return load().then(res => {
         wrapper.setState({
             isLoading: false,
-            isMainShow: true
+            isMainShow: true,
+            mainTvShow: {
+                name: res.tvShow.tvName,
+                image: res.tvShow.oneImage,
+                summary: res.tvShow.summary,
+            },
+            tvShowList: res.tvShowList
         })
-        const tvShowList = wrapper.find(TvShowList);
-        expect(tvShowList.find('.showList')).toHaveLength(1);
+        expect(wrapper.find('.showList').exists()).toBeTruthy();
     })
 })
 

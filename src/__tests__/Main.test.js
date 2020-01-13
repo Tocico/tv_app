@@ -4,6 +4,14 @@ import { load } from '../server/api';
 import Main from '../components/main/Main';
 import App from '../App'
 
+beforeEach(() => {
+    jest.resetModules();
+})
+
+afterEach(() => {
+    jest.resetModules();
+})
+
 test.only('should render title, image and text', () => {
     const wrapper = mount(<App />);
     expect(wrapper.find(Main).find('.mainName')).toHaveLength(0);
