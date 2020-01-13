@@ -64,7 +64,7 @@ async function getOneImage(){
 
     const  oneTvShow= await fetchImage();
     const tvName = oneTvShow.name;
-    const oneImage = oneTvShow.image.original;
+    const oneImage = oneTvShow.image.original? oneTvShow.image.original : oneTvShow.image.medium;
     const summary = oneTvShow.summary;
     const tvShowId = oneTvShow.id;
 

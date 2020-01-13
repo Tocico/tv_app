@@ -12,7 +12,7 @@ afterEach(() => {
     jest.resetModules();
 })
 
-test.only('should render title, image and text', () => {
+test('should render title, image and text', () => {
     const wrapper = mount(<App />);
     expect(wrapper.find(Main).find('.mainName')).toHaveLength(0);
     expect(wrapper.find(Main).find('.main-img')).toHaveLength(0);
@@ -23,6 +23,8 @@ test.only('should render title, image and text', () => {
 
         wrapper.setState({
             mainTvShow: {
+                isLoading: false,
+                isMainShow: true,
                 name: tvShow.tvName,
                 image: tvShow.oneImage,
                 summary: tvShow.summary,

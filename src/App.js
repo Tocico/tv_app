@@ -19,23 +19,27 @@ class App extends Component {
       },
       tvShowList: '',
       isMainShown: false,
+      error: ''
     };
   }
 
-  async componentDidMount() {
+  componentDidMount = () => {
     this.setState({ isLoading: true });
-    const { tvShow, tvShowList } = await load();
-
-    this.setState({
-      isLoading: false,
-      mainTvShow: {
-        name: tvShow.tvName,
-        image: tvShow.oneImage,
-        summary: tvShow.summary,
-      },
-      tvShowList: tvShowList,
-      isMainShown: true,
-    });
+    load().then(res => {
+      this.setState({
+        isLoading: false,
+        mainTvShow: {
+          name: res.tvShow.tvName,
+          image: res.tvShow.oneImage,
+          summary: res.tvShow.summary,
+        },
+        tvShowList: res.tvShowList,
+        isMainShown: true,
+        error: ''
+      });
+    }).catch(error => {
+      this.setState({ error: error.message })
+    })
   }
 
   render() {
@@ -45,13 +49,17 @@ class App extends Component {
           <Loading />
         ) : (
             <>
-              <Navbar isMainShown={() => { this.setState({ isMainShown: !this.state.isMainShown }) }} />
-              {this.state.isMainShown ?
+              {this.state.error ? <p className="error">{this.state.error}</p> :
                 <>
-                  {this.state.mainTvShow ? <Main mainTvShow={this.state.mainTvShow} /> : '' }
-                  <div>
-                    <TvShowList showList={this.state.tvShowList}></TvShowList>
-                  </div></> : ''
+                  <Navbar isMainShown={() => { this.setState({ isMainShown: !this.state.isMainShown }) }} />
+                  {this.state.isMainShown ?
+                    <>
+                      {this.state.mainTvShow ? <Main mainTvShow={this.state.mainTvShow} /> : ''}
+                      <div>
+                        <TvShowList showList={this.state.tvShowList}></TvShowList>
+                      </div></> : ''
+                  }
+                </>
               }
             </>
           )}
