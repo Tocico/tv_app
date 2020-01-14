@@ -32,8 +32,6 @@ describe('render <TvShowList />', () => {
                expect(wrapperDialogue).toHaveLength(0)
                
            })
-
         })
-       
     })
 })
