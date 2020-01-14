@@ -38,12 +38,8 @@ export default class Search extends Component {
     }
   };
 
-  focusElement = e => {
+  focusElement = () => {
     this.setState({ focus: true });
-    if (this.state.searchWord.length === 0) {
-      this.clearSearch();
-      this.setState({ focus: false });
-    }
   };
 
   clearSearch = () => {
@@ -63,14 +59,15 @@ export default class Search extends Component {
             ref={node => (this.node = node)}
             value={this.state.searchWord}
             type="text"
+            className="search"
             placeholder="Search..."
             onChange={this.handleChange}
-            onMouseDown={this.focusElement}
+            onClick={this.focusElement}
           />
           {this.state.focus ? (
             <i
               className="fas fa-times"
-              onMouseDown={() => this.clearSearch()}
+              onClick={() => this.clearSearch()}
             />
           ) : ''}
         </div>

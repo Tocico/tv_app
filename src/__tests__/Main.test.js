@@ -18,23 +18,15 @@ test('should render title, image and text', () => {
     expect(wrapper.find(Main).find('.main-img')).toHaveLength(0);
     expect(wrapper.find(Main).find('.main-summary')).toHaveLength(0);
 
-    return load().then(res => {
-        const tvShow = res.tvShow;
+    const data = {
+        name: 'Naruto',
+        image: 'naruto.jpg',
+        summary: '<p>asdasdasdasdasd</p>'
+    }
+    wrapper.setState({ mainTvShow: data })
 
-        wrapper.setState({
-            mainTvShow: {
-                isLoading: false,
-                isMainShow: true,
-                name: tvShow.tvName,
-                image: tvShow.oneImage,
-                summary: tvShow.summary,
-            }
-        })
-
-        const wrapperMain = mount(<Main mainTvShow={wrapper.state().mainTvShow} />);
-        expect(wrapperMain.find('.mainName')).toHaveLength(1);
-        expect(wrapperMain.find('.main-img')).toHaveLength(1);
-        expect(wrapperMain.find('.main-summary')).toHaveLength(1);
-    })
-
+    const wrapperMain = mount(<Main mainTvShow={wrapper.state().mainTvShow} />);
+    expect(wrapperMain.find('.mainName')).toHaveLength(1);
+    expect(wrapperMain.find('.main-img')).toHaveLength(1);
+    expect(wrapperMain.find('.main-summary')).toHaveLength(1);
 })

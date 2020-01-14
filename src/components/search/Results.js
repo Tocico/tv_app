@@ -23,9 +23,9 @@ function Results({ result }) {
             <div className="showList">
                 {Object.keys(result).map((e, key) => (
                     <React.Fragment key={key}>
-                        <label htmlFor="trigger" className="open_button" >
+                        <label htmlFor="trigger" className="open_button result_box" >
                             {result[e].show.image ?
-                                <img onClick={() => { onClick(result[e].show.id) }} src={forLoop(result[e].show.image)} alt={result[e].show.name}></img> :
+                                <img className='result_Img' onClick={() => { onClick(result[e].show.id) }} src={forLoop(result[e].show.image)} alt={result[e].show.name}></img> :
                                 <div onClick={() => { onClick(result[e].show.id) }} className="empty"><h3>{result[e].show.name}</h3></div>
                             }
                         </label>

@@ -30,6 +30,7 @@ function Dialogue({ dialogueInfo }) {
         }
     })
 
+
     return (
         <>
             <div className="modal_wrap">
@@ -43,15 +44,15 @@ function Dialogue({ dialogueInfo }) {
                                 <div className="dialogue">
                                     <div className="container">
                                         <div className="left pStyle">
-                                            <h2>{dialogueInfo.name}</h2>
+                                            <h2 className="name">{dialogueInfo.name}</h2>
                                             {
-                                                dialogueInfo.language ? <div><span className="lightBlack">Languages: </span>{dialogueInfo.language}</div> : ''
+                                                dialogueInfo.language ? <div className="language"><span className="lightBlack">Languages: </span>{dialogueInfo.language}</div> : ''
                                             }
                                             {
-                                                dialogueInfo.genres ? <div><span className="lightBlack">Genres: </span>{genre.map((genre, key) => (<span key={key}>{genre}&nbsp;&nbsp;</span>))}</div> : ''
+                                                dialogueInfo.genres ? <div><span className="lightBlack">Genres: </span>{genre.map((genre, key) => (<span key={key} className="genre">{genre}&nbsp;&nbsp;</span>))}</div> : ''
                                             }
                                             {
-                                                episodes ? <><div className="lightBlack">Season: {Object.keys(grouped).length}</div></> : ''
+                                                episodes ? <><div className="lightBlack">Season: <span className="seasons">{Object.keys(grouped).length}</span></div></> : ''
                                             }
 
                                         </div>

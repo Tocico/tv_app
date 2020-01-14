@@ -3,6 +3,7 @@ import { mount } from 'enzyme';
 import TvShowList from '../components/list/TvShowList';
 import App from '../App'
 import { load, getVideo } from '../server/api';
+import Dialogue from '../components/dialogue/Dialogue'
 
 describe('render <TvShowList />', () => {
     const wrapper = mount(<App />)
@@ -20,12 +21,34 @@ describe('render <TvShowList />', () => {
         })
     })
     
-    // test('should change state recentData when click on tv show images', () => {
-    //     const data = wrapper.state().tvShowList;
-    //     Object.keys(data).map(e => {
-    //        const id = data[e][0].id
-    //        wrapper.find(TvShowList).find(`[data-id=${id}]`).simulate('click')
-    //     })
+    test('should work onClick() when click on tv show images', () => {
+        const data = wrapper.state().tvShowList;
+        Object.keys(data).map(e => {
+           const id = data[e][0].id //Choose first tv show and get id
+           wrapper.find(TvShowList).find(`[data-test=${id}]`).simulate('click')
+           return getVideo(id).then(res => {
+            // const mockSetState = jest.fn();
+
+            // jest.mock('react', () => ({
+            //   useState: initial => [initial, mockSetState]
+            // }));
+            // test('Can increment from 1 to 2', () => {
+            //   const [_, setRecentData] = recentData(res.tvShowItem);
+            //   setRecentData();
+            //   expect(mockSetState).toHaveBeenCalledWith(0);
+            // })
+               const wrapperDialogue = mount(<Dialogue dialogueInfo={res.tvShowItem} />)
+               expect(wrapperDialogue).toHaveLength(0)
+               
+           })
+
+        })
        
-    // })
+    })
 })
+
+// export function recentData(data) {
+//     const [recentData, setRecentData] = useState(initial);
+  
+//     return [recentData, () => setRecentData(data)];
+//   }

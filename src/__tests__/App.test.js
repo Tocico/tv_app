@@ -25,12 +25,8 @@ test('should render <Navbar /> without crashing', () => {
     const wrapper = shallow(<App />)
     const navbar = wrapper.find(Navbar);
     expect(navbar.exists()).toBeFalsy();
-    return load().then(_ => {
-        wrapper.setState({
-            isLoading: false
-        })
+        wrapper.setState({ isLoading: false })
         expect(navbar.exists()).toBeFalsy();
-    })
 })
 
 test('should not render <Main /> before fetch API data', () => {
@@ -79,6 +75,7 @@ test('should change state tvShowList after fetch API', () => {
     })
 })
 
+
 // test.only('should throw an error', () => {
 //     const wrapper = mount(<App />)
 //     wrapper.setState({
@@ -88,25 +85,6 @@ test('should change state tvShowList after fetch API', () => {
 //         expect(wrapper.find('.error').exists()).toBe(true)
 // });
 
-// test('should not have tv show list', () => {
-//     const wrapper = shallow(<App />);
-//     expect(wrapper.state().tvShowList).toEqual('')
-// })
-
-// test('should have 60 tv show list after fetch API', () => {
-//     const wrapper = mount(<App />);
-//     return load().then(res => {
-//         const data = res.tvShowList;
-//         Object.keys(data).map((e) => {
-//             wrapper.setState({
-//                 isLoading: false,
-//                 tvShowList: data[e]
-//             })
-//             console.log(wrapper.state().tvShowList)
-//             expect(wrapper.state().tvShowList).toHaveLength(60)
-//         })
-//     })
-// })
 
 
 
