@@ -2,6 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import Navbar from '../components/header/Navbar';
 import Search from '../components/search/Search';
+import App from '../App'
 
 beforeEach(() => {
     jest.resetModules();
@@ -9,6 +10,24 @@ beforeEach(() => {
 
 afterEach(() => {
     jest.resetModules();
+})
+
+test('should call onFocus()', () => {
+    const fn = jest.fn()
+    const wrapper = mount(<Navbar isMainShown={fn} />)
+    wrapper.instance().onFocus()
+    expect(fn).toBeCalled();
+})
+
+test('should change state isMainShown()', () => {
+    const app = mount(<App />)
+    const fn = jest.fn()
+    const wrapper = mount(<Navbar isMainShown={fn} />)
+    console.log(app.state().isMainShown)
+    app.setState({
+        isLoading: false,
+    })
+    console.log(app.state().isMainShown)
 })
 
 test('should change state showMenu after click search icon ', () => {
@@ -47,5 +66,6 @@ test('should change state isMainShown and NOT render <Search /> after click sear
     wrapper.find('.fa-search').simulate('click')
     expect(wrapper.find(Search).exists()).toBeFalsy()
 })
+
 
 

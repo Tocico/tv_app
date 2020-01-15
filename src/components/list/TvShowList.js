@@ -11,9 +11,6 @@ function TvShowList({showList}) {
         setRecentData(tvShowItem);
     }
 
-  
-
-
     return (
         <>
         <div className="showList">

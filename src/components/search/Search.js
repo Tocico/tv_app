@@ -44,7 +44,7 @@ export default class Search extends Component {
 
   clearSearch = () => {
     this.setState({
-      searchWord: " ",
+      searchWord: "",
       result: [],
       error: null,
       focus: false

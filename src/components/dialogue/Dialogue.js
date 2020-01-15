@@ -1,7 +1,6 @@
 import React from 'react'
 
 function Dialogue({ dialogueInfo }) {
-
     const genres = dialogueInfo['genres'];
     const genre = [];
     for (const i in genres) {

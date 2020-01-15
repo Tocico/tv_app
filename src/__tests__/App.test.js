@@ -20,14 +20,14 @@ test('should render <App /> without crashing', () => {
     expect(wrapper.exists()).toBeTruthy();
 });
 
-// test('should render <Navbar /> without crashing', () => {
-//     expect.assertions(2);
-//     const wrapper = shallow(<App />)
-//     const navbar = wrapper.find(Navbar);
-//     expect(navbar.exists()).toBeFalsy();
-//         wrapper.setState({ isLoading: false })
-//         expect(navbar.exists()).toBeFalsy();
-// })
+test('should render <Navbar /> without crashing', () => {
+    expect.assertions(2);
+    const wrapper = shallow(<App />)
+    const navbar = wrapper.find(Navbar);
+    expect(navbar.exists()).toBeFalsy();
+        wrapper.setState({ isLoading: false })
+        expect(navbar.exists()).toBeFalsy();
+})
 
 test('should not render <Main /> before fetch API data', () => {
     const wrapper = shallow(<App />);
@@ -74,7 +74,6 @@ test('should change state tvShowList after fetch API', () => {
         expect(wrapper.state().tvShowList).toBe(res.tvShowList);
     })
 })
-
 
 // test.only('should throw an error', () => {
 //     const wrapper = mount(<App />)

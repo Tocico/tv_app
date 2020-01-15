@@ -4,6 +4,10 @@ beforeEach(() => {
     jest.resetModules();
 })
 
+afterEach(() => {
+    jest.resetModules();
+})
+
 test('getVideo() should be return JSON', async () => {
     const query = 1;
     const returnData = await getVideo(query);
