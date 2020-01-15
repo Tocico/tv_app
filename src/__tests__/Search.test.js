@@ -1,8 +1,19 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import { searchTvShow } from '../server/api'
 import Search from '../components/search/Search'
 import Results from '../components/search/Results';
+import { FormControl } from 'react-bootstrap';
+
+test('should calls "focusElement()" on input forum click', () => {
+    // const wrapper = shallow(<Search />);
+    // const spy = jest.spyOn(wrapper.instance(), 'focusElement');
+    // wrapper.update();
+    // console.log(wrapper.debug())
+    // wrapper.find('[type="text"]').simulate('click')
+    // console.log(wrapper.debug())
+    // expect(spy).toHaveBeenCalled()
+})
 
 test('should change setState searchWord when user write something on search', () => {
     const wrapper = mount(<Search />)
@@ -22,9 +33,9 @@ test('fail searching should return error message', () => {
 test('delete placeholder text when user click on input form', () => {
     const wrapper = mount(<Search />)
     wrapper.find('input[type="text"]').simulate('change',
-    wrapper.setState({
-        searchWord: 'Naruto'
-    }))
+        wrapper.setState({
+            searchWord: 'Naruto'
+        }))
     wrapper.find('input[type="text"]').simulate('click',
         wrapper.setState({
             focus: true
@@ -35,9 +46,9 @@ test('delete placeholder text when user click on input form', () => {
 test('should disappear cross mark when user click on cross mark', () => {
     const wrapper = mount(<Search />)
     wrapper.find('input[type="text"]').simulate('click',
-    wrapper.setState({
-        focus: true
-    }))
+        wrapper.setState({
+            focus: true
+        }))
     wrapper.find('.fa-times').simulate('click',
         wrapper.setState({
             searchWord: '',

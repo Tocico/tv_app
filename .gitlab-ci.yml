@@ -1,18 +1,27 @@
 image: node:10.16.0
 
+variables:
+  CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/cache/Cypress"
+
+cache:
+  paths:
+    - node_modules/
+    - cache/Cypress
+
 test:
+  image: cypress/base:10
   stage: test
   before_script: 
     - npm install 
   script:
-    - npm run test
+    - npm run cypress:e2e:ci
 
 pages:
   stage: deploy
   before_script: 
     - npm install
   script:
-    - npm run build
+    - CI=true npm run build
     - rm -rf public
     - mv build public
   artifacts:
