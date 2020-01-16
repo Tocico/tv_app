@@ -44,19 +44,13 @@ function Dialogue({ dialogueInfo }) {
                                     <div className="container">
                                         <div className="left pStyle">
                                             <h2 className="name">{dialogueInfo.name}</h2>
-                                            {
-                                                dialogueInfo.language ? <div className="language"><span className="lightBlack">Languages: </span>{dialogueInfo.language}</div> : ''
-                                            }
-                                            {
-                                                dialogueInfo.genres ? <div><span className="lightBlack">Genres: </span>{genre.map((genre, key) => (<span key={key} className="genre">{genre}&nbsp;&nbsp;</span>))}</div> : ''
-                                            }
-                                            {
-                                                episodes ? <><div className="lightBlack">Season: <span className="seasons">{Object.keys(grouped).length}</span></div></> : ''
-                                            }
+                                            <div className="language"><span className="lightBlack">Languages: </span>{dialogueInfo.language}</div>
+                                            <div><span className="lightBlack">Genres: </span>{genre.map((genre, key) => (<span key={key} className="genre">{genre}&nbsp;&nbsp;</span>))}</div>
+                                            <div className="lightBlack">Season: <span className="seasons">{Object.keys(grouped).length}</span></div>
 
                                         </div>
                                         <div className="right">
-                                            <img src={images[0]} alt={dialogueInfo.name}/>
+                                            <img src={images[0]} alt={dialogueInfo.name} />
                                         </div>
                                     </div>
                                     <div className="summary">
@@ -67,7 +61,7 @@ function Dialogue({ dialogueInfo }) {
                                             {Object.keys(grouped).map((episode, key) => (<React.Fragment key={key}>
                                                 <div className="season">Season {episode}</div>
                                                 <div className="container">
-                                                    {grouped[episode].map((e,key) => (
+                                                    {grouped[episode].map((e, key) => (
                                                         <React.Fragment key={key}>
                                                             <div className="container_image">
                                                                 <div className="showTitle">
