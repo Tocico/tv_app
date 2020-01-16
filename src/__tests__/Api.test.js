@@ -16,7 +16,7 @@ test('getVideo() should be return JSON', async () => {
     }).not.toThrow();
 })
 
-test('searchTvShow() should be return JSON', async () => {
+test('searchTvShow() should return JSON', async () => {
     const name = 'ai'
     const returnData = await searchTvShow(name);
     expect(() => {
@@ -24,7 +24,7 @@ test('searchTvShow() should be return JSON', async () => {
     }).not.toThrow();
 })
 
-test('searchTvShow() should be return error message if its empty JSON', async() => {
+test('searchTvShow() should return error message if its empty JSON', async() => {
     const name = 'asdsdaffssdsd'
     const errorMsg = 'no show';
     const returnData = await searchTvShow(name);
@@ -32,18 +32,18 @@ test('searchTvShow() should be return error message if its empty JSON', async() 
     expect(result).toEqual(errorMsg)
 })
 
-test('load() should be return property "tvShowList"', async () => {
+test('load() should return property "tvShowList"', async () => {
     return expect(await load()).toHaveProperty(['tvShowList']);
 })
 
-test('getOneImage() should be return property name "tvName", "oneImage", "summary" and "tvShowId" ', async () => {
+test('getOneImage() should return property name "tvName", "oneImage", "summary" and "tvShowId" ', async () => {
     const returnData = await load();
     const data = returnData.tvShow;
     const tv = Object.keys(data);
     expect(tv).toStrictEqual(['tvName', 'oneImage', 'summary', 'tvShowId'])
 })
 
-test('getTvShow() should be return 60 length av tv show list ', async() => {
+test('getTvShow() should return 60 length av tv show list ', async() => {
     const returnData = await load();
     const data = returnData.tvShowList;
     Object.keys(data).map((e,_) => {

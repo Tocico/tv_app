@@ -10,13 +10,9 @@ describe('render <Dialogue />', () => {
     afterEach(() => {
         jest.resetModules();
     })
-    test('should render tv show title', () => {
-        const data = { name: 'naruto' }
-        const wrapper = shallow(<Dialogue dialogueInfo={data} />)
-        expect(wrapper.find('.name').contains('naruto')).toBeTruthy()
-    })
 
-    test('should render genres, languages and season', () => {
+
+    test('should render title, genres, languages and season', () => {
         const data = {
             id: 1,
             url: 'https://www.tvmaze.com/shows/80/modern-family',
@@ -33,16 +29,15 @@ describe('render <Dialogue />', () => {
         }
 
         const wrapper = shallow(<Dialogue dialogueInfo={data} />)
+        expect(wrapper.find('.name').exists()).toBeTruthy()
         expect(wrapper.find('.genre').exists()).toBeTruthy()
         expect(wrapper.find('.language').exists()).toBeTruthy()
         expect(wrapper.find('.seasons').exists()).toBeTruthy()
     })
 
-    test('should NOT render genres, languages and season if there is no value', () => {
+    test('should NOT render dialogue information if there is no value', () => {
         const wrapper = shallow(<Dialogue dialogueInfo='' />)
-        expect(wrapper.find('.genre')).toHaveLength(0)
-        expect(wrapper.find('.language')).toHaveLength(0)
-        expect(wrapper.find('.seasons')).toHaveLength(0)
+        expect(wrapper.find('.dialogue')).toHaveLength(0)
     })
 
 })

@@ -1,6 +1,5 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { load } from '../server/api';
 import Main from '../components/main/Main';
 import App from '../App'
 
@@ -23,9 +22,8 @@ test('should render title, image and text', () => {
         image: 'naruto.jpg',
         summary: '<p>asdasdasdasdasd</p>'
     }
-    wrapper.setState({ mainTvShow: data })
 
-    const wrapperMain = mount(<Main mainTvShow={wrapper.state().mainTvShow} />);
+    const wrapperMain = mount(<Main mainTvShow={data} />);
     expect(wrapperMain.find('.mainName')).toHaveLength(1);
     expect(wrapperMain.find('.main-img')).toHaveLength(1);
     expect(wrapperMain.find('.main-summary')).toHaveLength(1);

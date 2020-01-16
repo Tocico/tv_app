@@ -40,7 +40,6 @@ test('should render <Main /> and <TvShowList /> after fetch API', () => {
     return load().then(_ => {
         wrapper.setState({ })
     }).then(_ => {
-        console.log(wrapper.state())
         expect(wrapper.find(Main).exists()).toBeTruthy()
         expect(wrapper.find(TvShowList).exists()).toBeTruthy()
     })

@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import TvShowList from '../components/list/TvShowList';
 import Dialogue from '../components/dialogue/Dialogue'
 import { showList } from '../utilities/tvShowListMock'
@@ -28,10 +28,10 @@ describe('render <TvShowList />', () => {
         const wrapper = mount(<TvShowList showList={showList} />)
         const id = showList.showList[0].id
         const name = showList.showList[0].name
-        wrapper.find(`[data-test=${id}]`).simulate('click')
+        wrapper.find(`[data-test=${id}]`).simulate('click', id)
         await act(async () => {
-            await getVideo(id).then(res => {
-                wrapper.setState({ recentData: res.tvShowItem })
+            await getVideo(id).then(_ => {
+                wrapper.setState({ })
             })
             expect(wrapper.find(Dialogue).find('.name').text()).toBe(name)
         })

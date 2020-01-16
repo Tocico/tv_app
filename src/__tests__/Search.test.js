@@ -21,7 +21,7 @@ test('should call handleChange() and change setState searchWord when user write 
     expect(wrapper.state().searchWord).toBe('Naruto')
 })
 
-test('delete placeholder text when user click on cross mark', () => {
+test('should call clearSearch() when user click on cross mark', () => {
     const wrapper = mount(<Search />)
     const searchWord = { target: { name: 'searchWord', value: 'Naruto' } }
     wrapper.find('input[type="text"]').simulate('change', searchWord)
@@ -42,29 +42,29 @@ test('should show cross mark when user click on search input', () => {
     expect(wrapper.find('.fa-times').exists()).toBeTruthy()
 })
 
-test('fail searching should return error message', () => {
+test('fail searching should return error message', async() => {
     const wrapper = mount(<Search />)
     const errorSearchWord = { target: { name: 'searchWord', value: "sdgdgsdfsdfsdfsdfsdfsdfdfdfdf" } }
-    wrapper.find('input[type="text"]').simulate('change', errorSearchWord )
-    const errorMsg = 'no show';
-    wrapper.setState({
-        error : errorMsg
+    wrapper.find('input[type="text"]').simulate('change', errorSearchWord)
+    await act(async () => {
+        await searchTvShow(errorSearchWord).then(_ => {
+            wrapper.setState({})
+        })
     })
     expect(wrapper.find('.errorMsg').exists()).toBeTruthy()
 })
 
-test('should render <Results /> when seaching', async() => {
+test('should render <Results /> when seaching', async () => {
     const wrapper = mount(<Search />)
     const searchWord = { target: { name: 'searchWord', value: 'Naruto' } }
     wrapper.find('input[type="text"]').simulate('change', searchWord)
-
+    const getStateSearchWord = wrapper.state().searchWord.toLowerCase()
     await act(async () => {
-        await searchTvShow(wrapper.state().searchWord).then(res => {
-           wrapper.setState({
-               result: res.searchTvShow
-           })  
-           expect(wrapper.find(Results).exists).toBeTruthy()
-      })
+        await searchTvShow(getStateSearchWord).then(res => {
+            wrapper.setState({})
+        })
     })
+    expect(wrapper.find(Results).exists).toBeTruthy()
 })
+
 

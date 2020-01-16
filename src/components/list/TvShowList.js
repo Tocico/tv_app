@@ -4,14 +4,11 @@ import { getVideo } from '../../server/api';
 
 
 class TvShowList extends Component {
-    // const [recentData, setRecentData] = useState('');
     constructor(props) {
         super(props);
         this.state = {
             recentData: ""
         }
-
-
     }
 
     async  onClick(query) {

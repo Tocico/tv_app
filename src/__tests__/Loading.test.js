@@ -12,7 +12,7 @@ afterEach(() => {
     jest.resetModules();
 })
 
-test('render loading animation while loading', () => {
+test('render <Loading />  while fetching', () => {
     const wrapper = mount(<App />);
     act(() => {
         wrapper.setState({
