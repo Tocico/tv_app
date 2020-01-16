@@ -3,6 +3,7 @@ import { mount } from 'enzyme';
 import Search from '../components/search/Search'
 import Results from '../components/search/Results';
 import { searchTvShow } from '../server/api'
+import { act } from 'react-dom/test-utils';
 
 
 beforeEach(() => {
@@ -52,16 +53,18 @@ test('fail searching should return error message', () => {
     expect(wrapper.find('.errorMsg').exists()).toBeTruthy()
 })
 
-test('should render <Results /> when seaching', () => {
+test('should render <Results /> when seaching', async() => {
     const wrapper = mount(<Search />)
     const searchWord = { target: { name: 'searchWord', value: 'Naruto' } }
     wrapper.find('input[type="text"]').simulate('change', searchWord)
 
-      return searchTvShow(wrapper.state().searchWord).then(res => {
+    await act(async () => {
+        await searchTvShow(wrapper.state().searchWord).then(res => {
            wrapper.setState({
                result: res.searchTvShow
            })  
            expect(wrapper.find(Results).exists).toBeTruthy()
       })
+    })
 })
 

@@ -4,7 +4,6 @@ import App from '../App';
 import { load } from '../server/api';
 import Main from '../components/main/Main';
 import TvShowList from '../components/list/TvShowList';
-import Navbar from '../components/header/Navbar'
 
 beforeEach(() => {
     jest.resetModules();
@@ -20,18 +19,19 @@ test('should render <App /> without crashing', () => {
     expect(wrapper.exists()).toBeTruthy();
 });
 
-test('should render <Navbar /> without crashing', () => {
-    expect.assertions(2);
-    const wrapper = shallow(<App />)
-    const navbar = wrapper.find(Navbar);
-    expect(navbar.exists()).toBeFalsy();
-        wrapper.setState({ isLoading: false })
-        expect(navbar.exists()).toBeFalsy();
-})
 
-test('should not render <Main /> before fetch API data', () => {
-    const wrapper = shallow(<App />);
-    expect(wrapper.find(Main)).toHaveLength(0);
+describe("Before fetch API data", () => {
+
+    test('should NOT render <Main /> before fetch API data', () => {
+        const wrapper = shallow(<App />);
+        expect(wrapper.find(Main)).toHaveLength(0);
+    })
+
+    test('should NOT render <TvShowList /> before fetch API data', () => {
+        const wrapper = shallow(<App />);
+        expect(wrapper.find(TvShowList)).toHaveLength(0);
+    })
+
 })
 
 test('should change state mainTvShow after fetch API', () => {
@@ -56,33 +56,17 @@ test('should change state mainTvShow after fetch API', () => {
     })
 })
 
-test('should not render <TvShowList /> before fetch API data', () => {
-    const wrapper = shallow(<App />);
-    expect(wrapper.find(TvShowList)).toHaveLength(0);
-})
-
-test('should change state tvShowList after fetch API', () => {
-    expect.assertions(2);
-    return load().then(res => {
-        const wrapper = mount(<App />);
-        expect(wrapper.state().tvShowList).toBe('')
-        wrapper.setState({
-            isLoading: false,
-            isMainShow: true,
-            tvShowList: res.tvShowList
-        })
-        expect(wrapper.state().tvShowList).toBe(res.tvShowList);
+test('should call handleChange()', () => {
+    const wrapper = shallow(<App />)
+    wrapper.setState({
+        isLoading: false
     })
+    expect(wrapper.state().isMainShown).toBe(false)
+    wrapper.instance().handleChange()
+    expect(wrapper.state().isMainShown).toBe(true)
 })
 
-// test.only('should throw an error', () => {
-//     const wrapper = mount(<App />)
-//     wrapper.setState({
-//         isLoading: true,
-//         error : 'error'
-//     })
-//         expect(wrapper.find('.error').exists()).toBe(true)
-// });
+
 
 
 

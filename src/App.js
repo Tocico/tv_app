@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import Loading from "./components/loading/Loading";
 import { load } from "./server/api";
 import TvShowList from "./components/list/TvShowList";
-import Navbar from "./components/header/Navbar";
 import Main from "./components/main/Main"
+import Search from "./components/search/Search"
 
 
 class App extends Component {
@@ -37,9 +37,11 @@ class App extends Component {
         isMainShown: true,
         error: ''
       });
-    }).catch(error => {
-      this.setState({ error: error.message })
     })
+  }
+
+  handleChange = () => {
+     this.setState({ isMainShown : !this.state.isMainShown })
   }
 
   render() {
@@ -47,15 +49,22 @@ class App extends Component {
       <>
         {this.state.isLoading ? (
           <Loading />
-        ) : this.state.error ? <p className="error">{this.state.error}</p> : (
+        ) : (
           <>
-            <Navbar isMainShown={() => { this.setState({ isMainShown: !this.state.isMainShown }) }} />
+             <div className="header">
+                <div className="wrapper">
+                    <a href='./'><h1>TV SHOW</h1></a>
+                    <div className="menuTrigger" onClick={this.handleChange}>
+                        <i className="fa fa-search "  />
+                    </div>
+                </div>
+            </div>
             {this.state.isMainShown ?
               <>
-                {this.state.mainTvShow ? <Main mainTvShow={this.state.mainTvShow} /> : ''}
+                <Main mainTvShow={this.state.mainTvShow} /> 
                 <div>
                   <TvShowList showList={this.state.tvShowList}></TvShowList>
-                </div></> : ''
+                </div></> : <Search />
             }
           </>
         )}

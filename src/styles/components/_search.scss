@@ -5,8 +5,9 @@
     justify-content: flex-end;
     width: 35vw;
     float: right;
-  
+    
     .fa-times{
+      transform: translate(-9vw, -5.4vw);
       position: absolute;
       right: 0.5em;
       font-size: 1.5em;
@@ -77,4 +78,11 @@
   display: block;
   margin: 4%;
   text-align: center;
+ }
+
+ .search{
+  position: absolute;
+  top: 60%;
+  left: 0%;
+  transform: translate(-23%, -164%);
  }
