@@ -4,6 +4,7 @@ import App from '../App';
 import { load } from '../server/api';
 import Main from '../components/main/Main';
 import TvShowList from '../components/list/TvShowList';
+import Search from '../components/search/Search';
 
 beforeEach(() => {
     jest.resetModules();
@@ -34,25 +35,14 @@ describe("Before fetch API data", () => {
 
 })
 
-test('should change state mainTvShow after fetch API', () => {
-    expect.assertions(6);
-    return load().then(res => {
-        const wrapper = mount(<App />);
-        expect(wrapper.state().mainTvShow.name).toBe('');
-        expect(wrapper.state().mainTvShow.image).toBe('');
-        expect(wrapper.state().mainTvShow.summary).toBe('');
-        wrapper.setState({
-            isLoading: false,
-            isMainShow: true,
-            mainTvShow: {
-                name: res.tvShow.tvName,
-                image: res.tvShow.oneImage,
-                summary: res.tvShow.summary,
-            }
-        })
-        expect(wrapper.state().mainTvShow.name).toBe(res.tvShow.tvName);
-        expect(wrapper.state().mainTvShow.image).toBe(res.tvShow.oneImage);
-        expect(wrapper.state().mainTvShow.summary).toBe(res.tvShow.summary);
+test('should render <Main /> and <TvShowList /> after fetch API', () => {
+    const wrapper = mount(<App />);
+    return load().then(_ => {
+        wrapper.setState({ })
+    }).then(_ => {
+        console.log(wrapper.state())
+        expect(wrapper.find(Main).exists()).toBeTruthy()
+        expect(wrapper.find(TvShowList).exists()).toBeTruthy()
     })
 })
 
@@ -65,6 +55,18 @@ test('should call handleChange()', () => {
     wrapper.instance().handleChange()
     expect(wrapper.state().isMainShown).toBe(true)
 })
+
+test('should render <Search /> when click on search icon', () => {
+    const wrapper = shallow(<App />)
+    wrapper.setState({
+        isLoading: false,
+        isMainShown : true
+    })
+    expect(wrapper.find(Search).exists()).toBeFalsy()
+    wrapper.find('.menuTrigger').simulate('click')
+    expect(wrapper.find(Search).exists()).toBeTruthy()
+})
+
 
 
 

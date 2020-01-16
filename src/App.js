@@ -19,7 +19,6 @@ class App extends Component {
       },
       tvShowList: '',
       isMainShown: false,
-      error: ''
     };
   }
 
@@ -35,13 +34,12 @@ class App extends Component {
         },
         tvShowList: res.tvShowList,
         isMainShown: true,
-        error: ''
       });
     })
   }
 
   handleChange = () => {
-     this.setState({ isMainShown : !this.state.isMainShown })
+    this.setState({ isMainShown: !this.state.isMainShown })
   }
 
   render() {
@@ -50,24 +48,26 @@ class App extends Component {
         {this.state.isLoading ? (
           <Loading />
         ) : (
-          <>
-             <div className="header">
-                <div className="wrapper">
+            <>
+              <div>
+                <div className="header">
+                  <div className="wrapper">
                     <a href='./'><h1>TV SHOW</h1></a>
                     <div className="menuTrigger" onClick={this.handleChange}>
-                        <i className="fa fa-search "  />
+                      <i className="fa fa-search " />
                     </div>
+                  </div>
                 </div>
-            </div>
-            {this.state.isMainShown ?
-              <>
-                <Main mainTvShow={this.state.mainTvShow} /> 
-                <div>
-                  <TvShowList showList={this.state.tvShowList}></TvShowList>
-                </div></> : <Search />
-            }
-          </>
-        )}
+              </div>
+              {this.state.isMainShown ?
+                <>
+                  <Main mainTvShow={this.state.mainTvShow} />
+                  <div>
+                    <TvShowList showList={this.state.tvShowList}></TvShowList>
+                  </div></> : <Search />
+              }
+            </>
+          )}
       </>
     );
   }

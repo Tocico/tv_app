@@ -61,6 +61,7 @@ async function getOneImage(){
         const response = await axios (`https://api.tvmaze.com/shows/${num}`);
              return response.data;
     }
+    
 
     const  oneTvShow= await fetchImage();
     const tvName = oneTvShow.name;

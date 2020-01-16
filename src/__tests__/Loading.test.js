@@ -2,6 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import App from '../App';
 import Loading from '../components/loading/Loading'
+import { act } from 'react-dom/test-utils';
 
 beforeEach(() => {
     jest.resetModules();
@@ -13,8 +14,10 @@ afterEach(() => {
 
 test('render loading animation while loading', () => {
     const wrapper = mount(<App />);
-    wrapper.setState({
-        isLoading: true
+    act(() => {
+        wrapper.setState({
+            isLoading: true
+        })
     })
     const loading = wrapper.find(Loading);
     expect(loading.find('.loading-box')).toHaveLength(1);
@@ -23,8 +26,10 @@ test('render loading animation while loading', () => {
 
 test('disappear loading animation after loading finish', () => {
     const wrapper = mount(<App />);
-    wrapper.setState({
-        isLoading: false
+    act(() => {
+        wrapper.setState({
+            isLoading: false
+        })
     })
     const loading = wrapper.find(Loading);
     expect(loading.find('.loading-box')).toHaveLength(0);
